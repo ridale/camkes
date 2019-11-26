@@ -1,0 +1,4 @@
+
+procedure Transfer {
+    uint32_t xfer();
+};
