@@ -77,11 +77,15 @@ assembly {
         /* This should match the MAC address of the ethernet device */
         eth.ethdriver_mac = [0x00, 0x19, 0xb8, 0x00, 0xf0, 0x72];
         eth.heap_size = 0x40000;
-        /* Ethernet driver configuration */
+
         ethdriver.promiscuous_mode = 0;
         // Inherits the MAC address of the filter component
         ethdriver.mac <- eth.ethdriver_mac;
 
+        /* Usb driver configuration */
+        usbdriver.heap_size = 0x10000;
+        usbdriver.notification_pool = 100;
+        usbdriver.dma_pool = 0x200000;
     }
 }
 
