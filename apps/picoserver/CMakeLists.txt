@@ -39,7 +39,7 @@ elseif("${KernelArch}" STREQUAL "arm")
     set(cpp_define -DKernelArchArm)
 endif()
 
-set(PICOSERVER_IP_ADDR "192.168.168.2" CACHE STRING "IP address for the Picoserver component")
+set(PICOSERVER_IP_ADDR "" CACHE STRING "IP address for the Picoserver component")
 
 DeclareCAmkESComponent(
     Echo

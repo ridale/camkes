@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, Data61
+ * Copyright 2020, Data61
  * Commonwealth Scientific and Industrial Research Organisation (CSIRO)
  * ABN 41 687 119 230.
  *
@@ -11,22 +11,17 @@
  */
 
 import <std_connector.camkes>;
-import <TimeServer/TimeServer.camkes>;
 import <global-connectors.camkes>;
 
-component Client {
-     control;
-     uses Timer timeout;
-}
+import "components/Adder/Adder.camkes";
+import "components/Client/Client.camkes";
 
 assembly {
     composition {
-        component TimeServer time_server;
+        component Adder adder;
         component Client client;
-        connection seL4TimeServer client_timer(from client.timeout,
-                                               to   time_server.the_timer);
-    }
-    configuration {
-        time_server.timers_per_client = 1;
+
+        connection seL4RPCOverMultiSharedData p(from client.a, to adder.a);
     }
 }
+
