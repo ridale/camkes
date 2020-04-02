@@ -14,7 +14,6 @@ import <std_connector.camkes>;
 import <global-connectors.camkes>;
 import <TimeServer/TimeServer.camkes>;
 import <Usbdriver/Usbdriver.camkes>;
-//import <Otgdriver/Otgdriver.camkes>;
 
 import "components/UsbCell/UsbCell.camkes";
 
@@ -24,7 +23,6 @@ assembly {
         component UsbCell usbcell;
         /* Timer component */
         component TimeServer time_server;
-        //component OtgdriverARMPlat usb;
 
         /* Timer to UsbCell */
         connection seL4TimeServer usbcell_timer(from usbcell.timer, to time_server.the_timer);
