@@ -1,0 +1,12 @@
+import <Usbdriver/Usbdriver.camkes>;
+import <TimeServer/TimeServer.camkes>;
+
+component UsbCell {
+	control;
+
+    has mutex mut;
+
+    uses Timer timer;
+    consumes Notification timer_complete;
+
+}

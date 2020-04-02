@@ -16,4 +16,6 @@ cmake_minimum_required(VERSION 3.7.2)
 
 project(usbtest C)
 
+DeclareCAmkESComponent(UsbCell SOURCES components/UsbCell/src/main.c)
+
 DeclareCAmkESRootserver(usbtest.camkes)

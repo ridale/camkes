@@ -12,24 +12,41 @@
 
 import <std_connector.camkes>;
 import <global-connectors.camkes>;
+import <TimeServer/TimeServer.camkes>;
 import <Usbdriver/Usbdriver.camkes>;
+//import <Otgdriver/Otgdriver.camkes>;
+
+import "components/UsbCell/UsbCell.camkes";
 
 assembly {
     composition {
-        component UsbdriverARMPlat usb; 
+        component UsbdriverARMPlat usbdriver;
+        component UsbCell usbcell;
+        /* Timer component */
+        component TimeServer time_server;
+        //component OtgdriverARMPlat usb;
+
+        /* Timer to UsbCell */
+        connection seL4TimeServer usbcell_timer(from usbcell.timer, to time_server.the_timer);
+        connection seL4GlobalAsynchCallback usbcell_timer_int(from time_server.timer_notification, to usbcell.timer_complete);
+        /* Timer to usbdriver */
+        connection seL4TimeServer usbdriver_timer(from usbdriver.timer, to time_server.the_timer);
+        connection seL4GlobalAsynchCallback usbdriver_timer_int(from time_server.timer_notification, to usbdriver.timer_complete);
 
     }
 
     configuration {
+
+        time_server.timers_per_client = 4;
 
         /*
          * Non-platform specific configurations
          */
         
         /* usb driver configuration */
-        usb.heap_size = 0x10000;
-        usb.notification_pool = 100;
-        usb.dma_pool = 0x200000;
+        usbdriver.heap_size = 0x40000;
+        usbdriver.notification_pool = 100;
+        usbdriver.dma_pool = 0x200000;
     }
 }
 
